@@ -1,0 +1,33 @@
+@model IEnumerable<NorthwindApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Buscar por Nombre";
+}
+
+<h1>Productos que contienen "@ViewData["PalabraBusqueda"]"</h1>
+<p><em>Consulta LINQ: Where(p => p.ProductName.Contains("@ViewData["PalabraBusqueda"]"))</em></p>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Proveedor</th>
+            <th>Precio</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@item.ProductName</td>
+            <td>@item.Category?.CategoryName</td>
+            <td>@item.Supplier?.CompanyName</td>
+            <td>@(item.UnitPrice?.ToString("C"))</td>
+            <td>@item.UnitsInStock</td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

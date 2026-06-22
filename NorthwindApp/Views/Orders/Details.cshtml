@@ -1,0 +1,53 @@
+@model NorthwindApp.Models.Order
+
+@{
+    ViewData["Title"] = "Detalle del Pedido";
+}
+
+<h1>Pedido #@Model.OrderId</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Cliente</dt>
+            <dd class="col-sm-8">@Model.Customer?.CompanyName</dd>
+
+            <dt class="col-sm-4">Empleado</dt>
+            <dd class="col-sm-8">@(Model.Employee != null ? $"{Model.Employee.FirstName} {Model.Employee.LastName}" : "")</dd>
+
+            <dt class="col-sm-4">Fecha del Pedido</dt>
+            <dd class="col-sm-8">@Model.OrderDate</dd>
+
+            <dt class="col-sm-4">Enviado a</dt>
+            <dd class="col-sm-8">@Model.ShipName, @Model.ShipCity, @Model.ShipCountry</dd>
+        </dl>
+    </div>
+</div>
+
+<h3>Productos en este pedido (OrderDetails)</h3>
+<p><em>Consulta LINQ: Include(o => o.OrderDetails).ThenInclude(od => od.Product) — Productos dentro de pedidos mediante OrderDetails</em></p>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Producto</th>
+            <th>Precio Unitario</th>
+            <th>Cantidad</th>
+            <th>Descuento</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var od in Model.OrderDetails) {
+        <tr>
+            <td>@od.Product?.ProductName</td>
+            <td>@od.UnitPrice.ToString("C")</td>
+            <td>@od.Quantity</td>
+            <td>@(od.Discount.ToString("P"))</td>
+            <td>@((od.UnitPrice * od.Quantity * (1 - od.Discount)).ToString("C"))</td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

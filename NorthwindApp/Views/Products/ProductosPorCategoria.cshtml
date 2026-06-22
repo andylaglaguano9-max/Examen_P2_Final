@@ -1,0 +1,31 @@
+@model IEnumerable<NorthwindApp.Controllers.ProductoCategoriaViewModel>
+
+@{
+    ViewData["Title"] = "Productos por Categoría (Join)";
+}
+
+<h1>Productos de la categoría "Beverages" (usando Join)</h1>
+<p><em>Consulta LINQ: from p in Products join c in Categories on p.CategoryId equals c.CategoryId where c.CategoryName == "Beverages"</em></p>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@item.ProductName</td>
+            <td>@item.CategoryName</td>
+            <td>@(item.UnitPrice?.ToString("C"))</td>
+            <td>@item.UnitsInStock</td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

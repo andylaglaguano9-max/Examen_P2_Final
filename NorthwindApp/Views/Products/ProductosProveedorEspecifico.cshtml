@@ -1,0 +1,33 @@
+@model IEnumerable<NorthwindApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Productos de Proveedor USA > $10";
+}
+
+<h1>Productos de Proveedores en USA con precio mayor a $10</h1>
+<p><em>Consulta LINQ: Where(p => p.Supplier.Country == "USA" && p.UnitPrice > 10) — Condición compuesta</em></p>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Producto</th>
+            <th>Proveedor</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@item.ProductName</td>
+            <td>@item.Supplier?.CompanyName</td>
+            <td>@item.Category?.CategoryName</td>
+            <td>@(item.UnitPrice?.ToString("C"))</td>
+            <td>@item.UnitsInStock</td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

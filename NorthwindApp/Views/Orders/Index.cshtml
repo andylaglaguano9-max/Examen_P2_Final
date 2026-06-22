@@ -1,0 +1,35 @@
+@model IEnumerable<NorthwindApp.Models.Order>
+
+@{
+    ViewData["Title"] = "Pedidos Recientes";
+}
+
+<h1>5 Pedidos Más Recientes</h1>
+<p><em>Consulta LINQ: OrderByDescending(o => o.OrderDate).Take(5) con Include(Customer) e Include(Employee)</em></p>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Orden #</th>
+            <th>Cliente</th>
+            <th>Empleado</th>
+            <th>Fecha Pedido</th>
+            <th>País Envío</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@item.OrderId</td>
+            <td>@item.Customer?.CompanyName</td>
+            <td>@(item.Employee != null ? $"{item.Employee.FirstName} {item.Employee.LastName}" : "")</td>
+            <td>@item.OrderDate</td>
+            <td>@item.ShipCountry</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-sm btn-outline-info">Detalle</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
