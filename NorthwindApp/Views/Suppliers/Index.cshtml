@@ -1,0 +1,34 @@
+@model IEnumerable<NorthwindApp.Models.Supplier>
+
+@{
+    ViewData["Title"] = "Proveedores";
+}
+
+<h1>Proveedores</h1>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Empresa</th>
+            <th>Contacto</th>
+            <th>Ciudad</th>
+            <th>País</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@item.CompanyName</td>
+            <td>@item.ContactName</td>
+            <td>@item.City</td>
+            <td>@item.Country</td>
+            <td>@item.Phone</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.SupplierId" class="btn btn-sm btn-outline-info">Ver Productos</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
